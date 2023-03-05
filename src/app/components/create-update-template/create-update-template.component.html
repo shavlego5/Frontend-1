@@ -42,6 +42,6 @@
       <button mat-flat-button color="primary" (click)="upload.click()">Choose File</button>
       <input type="file" accept="application/json" (input)="uploaded($event)" #upload/>
     </div>
-    <ngx-monaco-editor class="json" [options]="editorOptionsJson" [(ngModel)]="codeJson"></ngx-monaco-editor>
+    <ngx-monaco-editor class="json" (ngModelChange)="contentChanged($event)" [options]="editorOptionsJson" [(ngModel)]="codeJson"></ngx-monaco-editor>
   </div>
 </div>

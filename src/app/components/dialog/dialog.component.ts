@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {ToggleDialogService} from "../../core/services/toggle-dialog.service";
+import {ToggleDialogService} from "../../core/services";
 
 @Component({
   selector: 'app-dialog',

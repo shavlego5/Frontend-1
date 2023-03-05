@@ -1,20 +1,32 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {emptyStringValidator, minLengthValidator, MyErrorStateMatcher} from "../../core/validators";
-import {HandlebarsTemplateGeneratorService} from "../../core/services/handlebars-template-generator.service";
+import {BaseService, HandlebarsTemplateGeneratorService} from "../../core/services";
 
 @Component({
   selector: 'app-create-update-template',
   templateUrl: './create-update-template.component.html',
   styleUrls: ['./create-update-template.component.scss']
 })
-export class CreateUpdateTemplateComponent {
+export class CreateUpdateTemplateComponent implements OnInit {
 
   @ViewChild('upload') upload!: ElementRef;
 
   constructor(
-    private templateGenerator: HandlebarsTemplateGeneratorService
+    private templateGenerator: HandlebarsTemplateGeneratorService,
+    private baseService: BaseService
   ) {
+  }
+
+  jsonData: any;
+
+  ngOnInit() {
+    this.jsonData = this.baseService.getItem('json-data');
+
+    if (this.jsonData) {
+      this.codeJson = this.jsonData;
+      this.contentChanged(this.jsonData);
+    }
   }
 
   name = new FormControl('', [Validators.required, emptyStringValidator, minLengthValidator(2)]);
@@ -26,10 +38,10 @@ export class CreateUpdateTemplateComponent {
   })
   matcher = new MyErrorStateMatcher();
 
-  editorOptionsHandlebars = {theme: 'vs-dark', language: 'handlebars', minimap: { enabled: false }};
-  editorOptionsJson = {theme: 'vs-dark', language: 'json', minimap: { enabled: false }};
-  codeHandlebars: string = '{{! Enter Handlebars Template Here }}\n' + this.templateGenerator.template;
-  codeJson:  any = '{\n "_Put": "your JSON data here"\n}';
+  editorOptionsHandlebars = {theme: 'vs-dark', language: 'handlebars', minimap: {enabled: false}};
+  editorOptionsJson = {theme: 'vs-dark', language: 'json', minimap: {enabled: false}};
+  codeHandlebars: string = '{{! Enter Handlebars Template Here }}\n';
+  codeJson: any = '{\n "_Put": "your JSON data here"\n}';
 
   onDragOver(event: any) {
     event.preventDefault();
@@ -67,9 +79,9 @@ export class CreateUpdateTemplateComponent {
 
   notJson() {
     this.codeJson = '{\n "_ERROR": "Uploaded file type is not JSON!"\n}';
-    setTimeout(()=> {
-      this.codeJson ='{\n "_ERROR": "Uploaded file type is not JSON!",\n "_Put": " JSON data only!"\n}';
-    },1000)
+    setTimeout(() => {
+      this.codeJson = '{\n "_ERROR": "Uploaded file type is not JSON!",\n "_Put": " JSON data only!"\n}';
+    }, 1000)
   }
 
   log(event: any) {
@@ -78,5 +90,11 @@ export class CreateUpdateTemplateComponent {
 
   generateTemplate(file: any) {
     const model = file;
+  }
+
+  contentChanged(event: any) {
+    this.baseService.setItem('json-data', event);
+    this.templateGenerator.generateTemplate(JSON.parse(event));
+    this.codeHandlebars = this.templateGenerator.template;
   }
 }
