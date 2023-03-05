@@ -1,6 +1,7 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {emptyStringValidator, minLengthValidator, MyErrorStateMatcher} from "../../core/validators";
+import {HandlebarsTemplateGeneratorService} from "../../core/services/handlebars-template-generator.service";
 
 @Component({
   selector: 'app-create-update-template',
@@ -12,7 +13,7 @@ export class CreateUpdateTemplateComponent {
   @ViewChild('upload') upload!: ElementRef;
 
   constructor(
-
+    private templateGenerator: HandlebarsTemplateGeneratorService
   ) {
   }
 
@@ -27,7 +28,7 @@ export class CreateUpdateTemplateComponent {
 
   editorOptionsHandlebars = {theme: 'vs-dark', language: 'handlebars', minimap: { enabled: false }};
   editorOptionsJson = {theme: 'vs-dark', language: 'json', minimap: { enabled: false }};
-  codeHandlebars: string = '{{! Enter Handlebars Template Here }}\n';
+  codeHandlebars: string = '{{! Enter Handlebars Template Here }}\n' + this.templateGenerator.template;
   codeJson:  any = '{\n "_Put": "your JSON data here"\n}';
 
   onDragOver(event: any) {
