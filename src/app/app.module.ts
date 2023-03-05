@@ -14,7 +14,10 @@ import { DialogComponent } from './components/dialog/dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import { CreateUpdateTemplateComponent } from './components/create-update-template/create-update-template.component';
 import {MatInputModule} from "@angular/material/input";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {MonacoEditorModule} from "ngx-monaco-editor-v2";
+import {MatDividerModule} from "@angular/material/divider";
+import {CdkDropList} from "@angular/cdk/drag-drop";
 
 @NgModule({
   declarations: [
@@ -34,7 +37,11 @@ import {ReactiveFormsModule} from "@angular/forms";
     MatFormFieldModule,
     MatDialogModule,
     MatInputModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MonacoEditorModule.forRoot(),
+    FormsModule,
+    MatDividerModule,
+    CdkDropList
   ],
   providers: [],
   bootstrap: [AppComponent]

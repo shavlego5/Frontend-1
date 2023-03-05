@@ -1,3 +1,5 @@
+@import "../mixins";
+
 mat-drawer-container {
   width: 100%;
   height: 100%;
@@ -7,10 +9,8 @@ mat-drawer-container {
   }
 
   mat-drawer-content {
-    display: flex;
+    @include flex(flex-start, baseline);
     height: 100%;
-    align-items: baseline;
-    justify-content: flex-start;
     position: relative;
     padding: 100px 50px;
 

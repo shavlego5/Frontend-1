@@ -15,7 +15,7 @@ export class AppComponent {
   ) {
   }
 
-  openDialog(content: string) {
-    this.dialog.openDialog('300ms', '300ms', content)
+  openDialog(content: string, title: string) {
+    this.dialog.openDialog('300ms', '300ms', content, title)
   }
 }
