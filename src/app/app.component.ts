@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {ToggleDialogService} from "./core/services/toggle-dialog.service";
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,14 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Frontend-1';
+  showFiller = false;
+
+  constructor(
+    private dialog: ToggleDialogService
+  ) {
+  }
+
+  openDialog(content: string) {
+    this.dialog.openDialog('300ms', '300ms', content)
+  }
 }
