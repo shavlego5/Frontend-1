@@ -1,1 +1,31 @@
-<p>create-update-template works!</p>
+<div class="create-update-template">
+  <form class="example-form">
+    <mat-form-field class="example-full-width">
+      <mat-label>Template Name</mat-label>
+      <input type="text" matInput [formControl]="name" [errorStateMatcher]="matcher"
+             placeholder="Enter Template Name">
+      <mat-error *ngIf="name.hasError('required')">
+        Please enter a Template Name!
+      </mat-error>
+      <mat-error *ngIf="!name.hasError('required') && name.hasError('isEmptyString')">
+        Empty Template Name is not allowed!
+      </mat-error>
+      <mat-error *ngIf="!name.hasError('required') && !name.hasError('isEmptyString') && name.hasError('length')">
+        Minimum length of Name is {{name.getError('length')}}!
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <mat-label>Template Description</mat-label>
+      <textarea matInput [formControl]="description" placeholder="Enter template description"></textarea>
+      <mat-error *ngIf="description.hasError('required')">
+       Template description required!
+      </mat-error>
+      <mat-error *ngIf="!description.hasError('required') && description.hasError('isEmptyString')">
+        Empty template description is not allowed!
+      </mat-error>
+      <mat-error *ngIf="!description.hasError('required') && !description.hasError('isEmptyString') && description.hasError('length')">
+        Minimum length of template description is {{description.getError('length')}}!
+      </mat-error>
+    </mat-form-field>
+  </form>
+</div>

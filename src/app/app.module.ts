@@ -13,6 +13,8 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import { DialogComponent } from './components/dialog/dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import { CreateUpdateTemplateComponent } from './components/create-update-template/create-update-template.component';
+import {MatInputModule} from "@angular/material/input";
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { CreateUpdateTemplateComponent } from './components/create-update-templa
     MatButtonModule,
     MatIconModule,
     MatFormFieldModule,
-    MatDialogModule
+    MatDialogModule,
+    MatInputModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
