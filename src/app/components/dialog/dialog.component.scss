@@ -3,3 +3,16 @@
 .mat-typography {
  // @include flex(space-between, flex-start);
 }
+
+.json {
+  width: 600px;
+  height: 500px;
+  position: relative;
+  margin-top: 50px;
+
+  button {
+    position: absolute;
+    top: -50px;
+    right: 0;
+  }
+}

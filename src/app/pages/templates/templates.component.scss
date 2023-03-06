@@ -3,6 +3,8 @@
 .container {
   @include flex(flex-start, center, row, 20px);
   flex-wrap: wrap;
+  position: relative;
+  padding: 80px 50px;
 
   .template {
     @include flex(flex-end, center, column, 5px);
@@ -39,8 +41,8 @@
       button {
         width: 100%;
 
-        &:first-child {
-          margin-bottom: 5px;
+        &:nth-child(2) {
+          margin: 5px 0;
         }
       }
 

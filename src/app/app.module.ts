@@ -19,6 +19,8 @@ import {MatDividerModule} from "@angular/material/divider";
 import {CdkDropList} from "@angular/cdk/drag-drop";
 import { TemplatesComponent } from './pages/templates/templates.component';
 import {MatExpansionModule} from "@angular/material/expansion";
+import { HeaderComponent } from './components/header/header.component';
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
 
 @NgModule({
   declarations: [
@@ -26,25 +28,27 @@ import {MatExpansionModule} from "@angular/material/expansion";
     TemplateComponent,
     DialogComponent,
     CreateUpdateTemplateComponent,
-    TemplatesComponent
+    TemplatesComponent,
+    HeaderComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatSidenavModule,
-    MatButtonModule,
-    MatIconModule,
-    MatFormFieldModule,
-    MatDialogModule,
-    MatInputModule,
-    ReactiveFormsModule,
-    MonacoEditorModule.forRoot(),
-    FormsModule,
-    MatDividerModule,
-    CdkDropList,
-    MatExpansionModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatSidenavModule,
+        MatButtonModule,
+        MatIconModule,
+        MatFormFieldModule,
+        MatDialogModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        MonacoEditorModule.forRoot(),
+        FormsModule,
+        MatDividerModule,
+        CdkDropList,
+        MatExpansionModule,
+        MatAutocompleteModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

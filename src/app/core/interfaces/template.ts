@@ -4,5 +4,6 @@ export interface ITemplate {
   createdAt: string,
   updatedAt: string | boolean,
   handlebars: string,
-  json: string
+  json: string,
+  jsonForResult?: string
 }

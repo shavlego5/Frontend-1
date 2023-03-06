@@ -12,4 +12,10 @@
   <ng-container *ngIf="dialog.content === 'delete'">
     <h3>Are you sure you want to delete this template?</h3>
   </ng-container>
+  <ng-container *ngIf="dialog.content === 'set json data'">
+    <div class="json">
+      <button mat-stroked-button mat-dialog-close (click)="saveJson(dialog.title!)">Set Data</button>
+      <ngx-monaco-editor class="json" [options]="editorOptionsJson" [(ngModel)]="codeJson"></ngx-monaco-editor>
+    </div>
+  </ng-container>
 </ng-template>

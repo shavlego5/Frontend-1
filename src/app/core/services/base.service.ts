@@ -32,6 +32,7 @@ export class BaseService {
     this.templatesContainer = [template].concat(this.templatesContainer);
     //this.templatesContainer.push(template);
     this.setItem('templates', this.templatesContainer);
+    this.getData();
   }
 
   getTemplate(name: string) {
