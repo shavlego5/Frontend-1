@@ -1,12 +1,16 @@
 import { Injectable } from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
 import {DialogComponent} from "../../components/dialog/dialog.component";
+import {BaseService} from "./base.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ToggleDialogService {
-  constructor(public dialog: MatDialog) {}
+  constructor(
+    public dialog: MatDialog,
+    private baseService: BaseService
+  ) {}
 
   content?: string;
   title?: string;

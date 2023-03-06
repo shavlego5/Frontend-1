@@ -1,5 +1,10 @@
 <div class="create-update-template">
-  <form class="example-form">
+  <div class="buttons">
+    <button mat-flat-button color="warn" (click)="reset()">Reset</button>
+    <button mat-flat-button color="primary" *ngIf="content === 'create'" (click)="create()">Create</button>
+    <button mat-flat-button color="primary" *ngIf="content === 'edit'" (click)="edit()">Edit</button>
+  </div>
+  <form class="example-form" [formGroup]="form">
     <mat-form-field class="example-full-width">
       <mat-label>Template Name</mat-label>
       <input type="text" matInput [formControl]="name" [errorStateMatcher]="matcher"
@@ -12,6 +17,9 @@
       </mat-error>
       <mat-error *ngIf="!name.hasError('required') && !name.hasError('isEmptyString') && name.hasError('length')">
         Minimum length of Name is {{name.getError('length')}}!
+      </mat-error>
+      <mat-error *ngIf="!name.hasError('required') && !name.hasError('isEmptyString') && name.hasError('nameExists')">
+        Template with this name already exists!
       </mat-error>
     </mat-form-field>
     <mat-form-field class="example-full-width">

@@ -19,5 +19,5 @@ export class CurrentDateService {
 
   day = `${this.currenTDate.date}.${this.currenTDate.month}.${this.currenTDate.year}`;
   time = `${this.currenTDate.hour}:${this.currenTDate.min}`;
-  fullDate = this.day + "-" + this.time;
+  fullDate = `${this.day} - ${this.time}`;
 }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {ToggleDialogService} from "../../core/services";
+import {BaseService, ToggleDialogService} from "../../core/services";
 
 @Component({
   selector: 'app-dialog',
@@ -8,7 +8,12 @@ import {ToggleDialogService} from "../../core/services";
 })
 export class DialogComponent {
   constructor(
-    public dialog: ToggleDialogService
+    public dialog: ToggleDialogService,
+    private baseService: BaseService
   ) {
+  }
+
+  delete(title: string) {
+    this.baseService.deleteTemplate(title);
   }
 }

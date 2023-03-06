@@ -22,7 +22,11 @@ export class HandlebarsTemplateGeneratorService {
 
     if (value) {
       for (let property in value) {
-        properties += `{{${key}.${property}}}\n`;
+        if(property == Object.keys(value)[Object.keys(value).length -1]) {
+          properties += `{{${key}.${property}}}`
+        } else {
+          properties += `{{${key}.${property}}}\n`
+        }
       }
     }
 
