@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { TemplatesComponent } from './pages/templates/templates.component';
 import { TemplateComponent } from './pages/template/template.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatSidenavModule} from "@angular/material/sidenav";
@@ -18,14 +17,16 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MonacoEditorModule} from "ngx-monaco-editor-v2";
 import {MatDividerModule} from "@angular/material/divider";
 import {CdkDropList} from "@angular/cdk/drag-drop";
+import { TemplatesComponent } from './pages/templates/templates.component';
+import {MatExpansionModule} from "@angular/material/expansion";
 
 @NgModule({
   declarations: [
     AppComponent,
-    TemplatesComponent,
     TemplateComponent,
     DialogComponent,
-    CreateUpdateTemplateComponent
+    CreateUpdateTemplateComponent,
+    TemplatesComponent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +42,8 @@ import {CdkDropList} from "@angular/cdk/drag-drop";
     MonacoEditorModule.forRoot(),
     FormsModule,
     MatDividerModule,
-    CdkDropList
+    CdkDropList,
+    MatExpansionModule
   ],
   providers: [],
   bootstrap: [AppComponent]

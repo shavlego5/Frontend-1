@@ -1,1 +1,41 @@
-<p>templates works!</p>
+<!--<div class="container">
+  <ng-container *ngFor="let template of baseService.templatesContainer">
+    <div class="template">
+      <div class="context-menu">
+        <button mat-icon-button aria-label="Example icon button with a vertical three dot icon" (click)="toggleContext($event)">
+          <mat-icon>more_horizontal</mat-icon>
+        </button>
+        <div>
+          <button mat-flat-button color="accent">Edit</button>
+          <button mat-flat-button color="warn">Delete</button>
+        </div>
+      </div>
+      <h1><a [routerLink]="['template', template.name]">{{template.name}}</a></h1>
+      <p>Created: {{template.createdAt}}</p>
+    </div>
+  </ng-container>
+</div> -->
+
+<div class="container">
+  <ng-container *ngFor="let template of baseService.templatesContainer">
+    <div class="template">
+      <mat-accordion class="context-menu">
+        <mat-expansion-panel hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <button mat-icon-button aria-label="Example icon button with a vertical three dot icon">
+                <mat-icon>more_horizontal</mat-icon>
+              </button>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="buttons">
+            <button mat-stroked-button (click)="openDialog('edit', template.name!)">Edit</button>
+            <button mat-stroked-button (click)="openDialog('delete', template.name!)">Delete</button>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+      <h1 [routerLink]="['template', template.name]">{{template.name}}</h1>
+      <p>Created: {{template.createdAt}}</p>
+    </div>
+  </ng-container>
+</div>

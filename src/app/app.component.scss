@@ -9,7 +9,6 @@ mat-drawer-container {
   }
 
   mat-drawer-content {
-    @include flex(flex-start, baseline);
     height: 100%;
     position: relative;
     padding: 100px 50px;
@@ -22,7 +21,11 @@ mat-drawer-container {
 
     .create-template {
       width: 280px;
-      height: 150px;
+      min-width: 280px;
+      height: 60px;
+      position: absolute;
+      bottom: 30px;
+      right: 30px;
     }
   }
 }
