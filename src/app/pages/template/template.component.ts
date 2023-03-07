@@ -31,18 +31,13 @@ export class TemplateComponent implements OnInit, AfterViewInit {
     const name = this.route.snapshot.paramMap.get('name');
     this.baseService.getData();
     this.baseService.templatesContainer.find(template => {
-      console.log(template.name)
       return template.name === name ? this.template = template : null;
     })
-
-    console.log(this.template.handlebars)
 
     const handlebars = String(this.template.handlebars);
     const compiledTemplate = Handlebars.compile(handlebars);
     const context = JSON.parse(this.template.jsonForResult!);
 
     this.handlebars = compiledTemplate(context);
-
-    console.log(JSON.parse(this.template.jsonForResult!))
   }
 }

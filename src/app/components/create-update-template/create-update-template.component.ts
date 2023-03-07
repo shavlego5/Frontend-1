@@ -141,20 +141,27 @@ export class CreateUpdateTemplateComponent implements OnInit {
   edit() {
     let currentTemplate = this.baseService.getTemplate(this.editName);
     this.form.markAllAsTouched();
-    if(this.form.valid && this.codeHandlebars !== '{{! Enter Handlebars Template Here }}\n') {
-      let template: ITemplate = {
-        name: this.form.get('name')!.value,
-        description: this.form.get('description')!.value,
-        createdAt: currentTemplate!.createdAt,
-        updatedAt: this.time.fullDate,
-        handlebars: this.codeHandlebars,
-        json: this.codeJson
-      }
-      this.baseService.updateTemplate(String(currentTemplate!.name), template);
-      this.reset();
-      this.dialog.closeAll();
+    if(this.form.get('name')?.invalid && this.form.get('name')?.value === currentTemplate?.name && this.codeHandlebars !== '{{! Enter Handlebars Template Here }}\n') {
+      this.setChanges(currentTemplate!);
+    } else if(this.form.valid && this.codeHandlebars !== '{{! Enter Handlebars Template Here }}\n'){
+     this.setChanges(currentTemplate!);
     } else {
       alert('Please enter all required data!')
     }
   }
+  setChanges(currentTemplate: ITemplate) {
+    let template: ITemplate = {
+      name: this.form.get('name')!.value,
+      description: this.form.get('description')!.value,
+      createdAt: currentTemplate!.createdAt,
+      updatedAt: this.time.fullDate,
+      handlebars: this.codeHandlebars,
+      json: this.codeJson
+    }
+    this.baseService.updateTemplate(String(currentTemplate!.name), template);
+    this.reset();
+    this.dialog.closeAll();
+  }
 }
+
+

@@ -1,7 +1,9 @@
 <mat-drawer-container class="example-container" [hasBackdrop]="true">
   <mat-drawer #drawer [mode]="'push'">
     <button mat-raised-button [routerLink]="''" (click)="drawer.toggle()">All Templates</button>
+    <div class="properties">
 
+    </div>
   </mat-drawer>
   <mat-drawer-content>
     <button class="menu-button" mat-raised-button (click)="drawer.toggle()" >Menu</button>

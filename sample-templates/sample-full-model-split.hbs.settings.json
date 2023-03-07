@@ -1,8 +1,0 @@
-{
-    "Target": "Model",
-    "ExportPath": ".\\Generated\\Split\\\\{{FileName}}",
-    "AppendToExisting": false,
-    "FileNamePattern": "//\\[(?<FileName>[\\w\\-]+\\.txt)\\]",
-    "RemoveFileName": true,
-    "SplitOn": "//##SPLIT##"
-}
