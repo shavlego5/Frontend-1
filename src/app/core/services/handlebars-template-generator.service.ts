@@ -10,89 +10,80 @@ export class HandlebarsTemplateGeneratorService {
 
   template: string = '';
 
-  params = {
-    string: ``,
-    array: ``,
-    object: ``
-  };
-
-  parameters = (key: any, value?: any) => {
-
-    let properties = ``;
-
-    if (value) {
-      for (let property in value) {
-        if(property == Object.keys(value)[Object.keys(value).length -1]) {
-          properties += `{{${key}.${property}}}`
-        } else {
-          properties += `{{${key}.${property}}}\n`
-        }
-      }
-    }
-
-    let templates = {
-      string: `{{${key}}}\n`,
-      array: `{{#each ${value}}}
-                    {{this}}
-               {{/each}}\n`,
-      object: `{{#with ${key}}}
-                     ${properties}
-               {{/with}}\n`
-    };
-
-    return this.params = templates;
+  isArray = (data: any) => {
+    return Array.isArray(data)
   }
 
-  checkArray(property: any, name?: string) {
-    property.forEach((item: any) => {
-      if (typeof item === 'string' || typeof item === 'number' || typeof item === null || typeof item === 'boolean') {
-        this.parameters(item);
-        this.template += this.params.string;
-      }
-      if (item.length >= 0 && typeof item !== "string") {
-        this.checkArray(item)
-      }
-      if (item.length === undefined && typeof item !== "number" && typeof item !== "boolean") {
-        let pureObject = true;
-        for (let property in item) {
-          if (typeof item[property] !== 'string' && typeof item[property] !== 'number' && typeof item[property] !== null && typeof item[property] !== 'boolean') {
-            pureObject = false
-          }
-        }
-        if (!pureObject) {
-          this.checkObject(item);
-        }
-        if (pureObject) {
-          this.parameters(name, item);
-          this.template += this.params.object;
-        }
-      }
+  isObject = (data: any) => {
+    return typeof data === "object" && data !== null && !Array.isArray(data);
+  }
+
+  isPureArray = (data: any) => {
+    return !data.some((item: any) => {
+      return this.isObject(item);
     })
   }
 
-  checkObject(object: any) {
-    for (let property in object) {
-      if (typeof object[property] === 'string' || typeof object[property] === 'number' || typeof object[property] === null || typeof object[property] === 'boolean') {
-        this.parameters(property);
-        this.template += this.params.string;
+  isPureObject = (data: any) => {
+    let is = true;
+    for (const key in data) {
+      if (this.isArray(data[key])) {
+        is = false
+      } else if (this.isObject(data[key])) {
+        is = false
       }
-      if (object[property].length === undefined && typeof object[property] !== "number" && typeof object[property] !== "boolean") {
-        // object
-        this.checkObject(object[property])
+    }
+
+    return is;
+  }
+
+  isOnlyObjectsInArray = (data: any) => {
+    return !data.some((item: any) => {
+      return !this.isObject(item);
+    })
+  }
+
+  pureObjectTemplate = (data: any, boolean?: boolean) => {
+    let template = ''
+    if (boolean) {
+      for (let property in data) {
+        template += `  {{${property}}}\n`
       }
-      if (object[property].length >= 0 && typeof object[property] !== "string") { // array
-        let pureArray = true;
-        object[property].forEach((arr: any) => {
-          if (typeof arr !== 'string' && typeof arr !== 'number' && typeof arr !== null && typeof arr !== 'boolean') {
-            pureArray = false;
-          }
-        })
-        if (!pureArray) {
-          this.checkArray(object[property], property)
+    } else {
+      for (let property in data[0]) {
+        template += `  {{${property}}}\n`
+      }
+    }
+    return template;
+  }
+
+  generate = (data: any) => {
+    for (const key in data) {
+      if (this.isArray(data[key])) {
+        this.template += `{{#each ${key}}}\n`;
+        if (this.isOnlyObjectsInArray(data[key]) && this.isPureObject(data[key][0])) {
+          this.template += this.pureObjectTemplate(data[key])
+          this.template += `{{/each}}\n`;
+        } else if (this.isObject(data[key][0])) {
+          this.generate(data[key][0])
+          this.template += `{{/each}}\n`;
+        } else {
+          this.template += `  {{this}}\n`
+          this.template += `{{/each}}\n`
         }
-        if (pureArray) {
-          this.parameters(null, property);
-          this.template += this.params.array;
+      } else if (!this.isArray(data[key]) && !this.isObject(data[key])) {
+        this.template += `{{${key}}}\n`
+      } else {
+        this.template += `{{#with ${key}}}\n`;
+        if (this.isPureObject(data[key])) {
+          this.template += this.pureObjectTemplate(data[key], true)
+          this.template += `{{/with}}\n`;
+        } else if (this.isObject(data[key])) {
+          this.generate(data[key][0])
+          this.template += `{{/with}}\n`;
+        } else {
+          this.template += `  {{this}}\n`
+          this.template += `{{/each}}\n`
         }
       }
     }
@@ -100,10 +91,6 @@ export class HandlebarsTemplateGeneratorService {
 
   generateTemplate(data: any) {
     this.template = '';
-    if (data.length === undefined && typeof data !== "number" && typeof data !== "boolean") {
-      this.checkObject(data);
-    } else if (data.length >= 0 && typeof data !== "string") {
-      this.checkArray(data)
-    }
+    this.generate(data)
   }
 }
