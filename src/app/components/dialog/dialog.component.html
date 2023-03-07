@@ -1,0 +1,21 @@
+<h2 mat-dialog-title>{{dialog.title}}</h2>
+<mat-dialog-content class="mat-typography">
+  <ng-container *ngTemplateOutlet="dialogContent"></ng-container>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-flat-button color="warn" mat-dialog-close (click)="delete(dialog.title!)"  *ngIf="dialog.content === 'delete'">Delete</button>
+  <button mat-stroked-button mat-dialog-close>Cancel</button>
+</mat-dialog-actions>
+
+<ng-template #dialogContent>
+  <app-create-update-template [name]="dialog.title!" [content]="dialog.content!" *ngIf="dialog.content === 'create' || dialog.content === 'edit'" ></app-create-update-template>
+  <ng-container *ngIf="dialog.content === 'delete'">
+    <h3>Are you sure you want to delete this template?</h3>
+  </ng-container>
+  <ng-container *ngIf="dialog.content === 'set json data'">
+    <div class="json">
+      <button mat-stroked-button mat-dialog-close (click)="saveJson(dialog.title!)">Set Data</button>
+      <ngx-monaco-editor class="json" [options]="editorOptionsJson" [(ngModel)]="codeJson"></ngx-monaco-editor>
+    </div>
+  </ng-container>
+</ng-template>

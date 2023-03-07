@@ -1,0 +1,55 @@
+<div class="create-update-template">
+  <div class="buttons">
+    <button mat-flat-button color="warn" (click)="reset()">Reset</button>
+    <button mat-flat-button color="primary" *ngIf="content === 'create'" (click)="create()">Create</button>
+    <button mat-flat-button color="primary" *ngIf="content === 'edit'" (click)="edit()">Edit</button>
+  </div>
+  <form class="example-form" [formGroup]="form">
+    <mat-form-field class="example-full-width">
+      <mat-label>Template Name</mat-label>
+      <input type="text" matInput [formControl]="name" [errorStateMatcher]="matcher"
+             placeholder="Enter Template Name">
+      <mat-error *ngIf="name.hasError('required')">
+        Please enter a Template Name!
+      </mat-error>
+      <mat-error *ngIf="!name.hasError('required') && name.hasError('isEmptyString')">
+        Empty Template Name is not allowed!
+      </mat-error>
+      <mat-error *ngIf="!name.hasError('required') && !name.hasError('isEmptyString') && name.hasError('length')">
+        Minimum length of Name is {{name.getError('length')}}!
+      </mat-error>
+      <mat-error *ngIf="!name.hasError('required') && !name.hasError('isEmptyString') && name.hasError('nameExists')">
+        Template with this name already exists!
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <mat-label>Template Description</mat-label>
+      <textarea matInput [formControl]="description" rows="15" placeholder="Enter template description"></textarea>
+      <mat-error *ngIf="description.hasError('required')">
+        Template description required!
+      </mat-error>
+      <mat-error *ngIf="!description.hasError('required') && description.hasError('isEmptyString')">
+        Empty template description is not allowed!
+      </mat-error>
+      <mat-error
+        *ngIf="!description.hasError('required') && !description.hasError('isEmptyString') && description.hasError('length')">
+        Minimum length of template description is {{description.getError('length')}}!
+      </mat-error>
+    </mat-form-field>
+  </form>
+  <ngx-monaco-editor class="handlebars" [options]="editorOptionsHandlebars"
+                     [(ngModel)]="codeHandlebars"></ngx-monaco-editor>
+  <mat-divider [vertical]="true"></mat-divider>
+  <div class="upload-json" (dragover)="onDragOver($event)" (dragenter)="onDragEnter($event)"
+       (dragleave)="onDragLeave($event)" (drop)="onDrop($event)">
+    <div class="upload">
+      <p>
+        Drag & Drop JSON file here
+      </p>
+      <p>Or</p>
+      <button mat-flat-button color="primary" (click)="upload.click()">Choose File</button>
+      <input type="file" accept="application/json" (input)="uploaded($event)" #upload/>
+    </div>
+    <ngx-monaco-editor class="json" (ngModelChange)="contentChanged($event)" [options]="editorOptionsJson" [(ngModel)]="codeJson"></ngx-monaco-editor>
+  </div>
+</div>

@@ -1,0 +1,67 @@
+@import "../../../mixins";
+
+.container {
+  @include flex(flex-start, center, row, 20px);
+  flex-wrap: wrap;
+  position: relative;
+  padding: 80px 50px;
+
+  .template {
+    @include flex(flex-end, center, column, 5px);
+    width: 280px;
+    min-width: 280px;
+    height: 150px;
+    position: relative;
+    border: 1px solid gray;
+    border-radius: 10px;
+
+    h1 {
+      text-decoration: underline;
+      text-underline-offset: 10px;
+      cursor: pointer;
+    }
+
+    .context-menu {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+
+      .mat-expansion-panel {
+        background: rgba(#2E4053, 0);
+        position: relative;
+        width: 50px;
+        transition: .5s;
+
+        &.mat-expanded {
+          width: auto;
+          background: rgba(#2E4053, 1);
+        }
+      }
+
+      button {
+        width: 100%;
+
+        &:nth-child(2) {
+          margin: 5px 0;
+        }
+      }
+
+      .buttons {
+
+      }
+
+      mat-panel-title {
+        button {
+          width: 50px;
+          position: absolute;
+          right: 0;
+          top: 0;
+        }
+      }
+    }
+  }
+}
+
+
+
+

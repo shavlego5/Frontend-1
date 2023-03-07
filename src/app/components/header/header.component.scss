@@ -1,0 +1,18 @@
+@import "../../../mixins";
+
+.header {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 10px;
+  @include flex(flex-end, baseline, row, 30px);
+
+  .search {
+    width: 300px;
+  }
+}
+
+
+
+
